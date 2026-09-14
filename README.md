@@ -1,5 +1,9 @@
 # Marching Band Simulation Web Edition
 
+[![Deploy static content to Pages](https://github.com/HoleInOneGolfer/MBS-Web/actions/workflows/static.yml/badge.svg)](https://github.com/HoleInOneGolfer/MBS-Web/actions/workflows/static.yml)
+[![GitHub repository](https://img.shields.io/badge/GitHub-MBS--Web-181717?logo=github)](https://github.com/HoleInOneGolfer/MBS-Web)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
+
 A browser-based marching-band drill viewer and test environment. It displays a
 football field on a canvas, animates players through sets, and supports JSON
 import/export for shows.
@@ -32,8 +36,9 @@ Then open `http://localhost/`.
 ## Coordinates
 
 Side 1 is the left half of the displayed field and Side 2 is the right half.
-The chart location reports the closest yard line and field reference, using the
-step size assigned to the active move.
+The view is from the press box: the bottom of the field is the front sideline
+and the top is the back sideline. The chart location reports the closest yard
+line and field reference, using the step size assigned to the active move.
 
 ## Show format
 

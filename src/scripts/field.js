@@ -149,10 +149,10 @@ class Field {
         }
 
         let references = [
-            { position: 0, name: "front sideline" },
-            { position: this.hashDistance, name: "front hash" },
-            { position: this.height - this.hashDistance, name: "back hash" },
-            { position: this.height, name: "back sideline" }
+            { position: 0, name: "back sideline" },
+            { position: this.hashDistance, name: "back hash" },
+            { position: this.height - this.hashDistance, name: "front hash" },
+            { position: this.height, name: "front sideline" }
         ];
         let reference = references[0];
         references.forEach(element => {
@@ -166,14 +166,14 @@ class Field {
         if (steps < .05) {
             vertical = `on ${reference.name}`;
         }
-        else if (reference.name == "front sideline") {
-            vertical = `${this.formatSteps(steps)} steps behind ${reference.name}`;
+        else if (reference.name == "front sideline" || reference.name == "front hash") {
+            vertical = `${this.formatSteps(steps)} steps ${y < reference.position ? "behind" : "in front of"} ${reference.name}`;
         }
         else if (reference.name == "back sideline") {
             vertical = `${this.formatSteps(steps)} steps in front of ${reference.name}`;
         }
         else {
-            vertical = `${this.formatSteps(steps)} steps ${y > reference.position ? "behind" : "in front of"} ${reference.name}`;
+            vertical = `${this.formatSteps(steps)} steps ${y < reference.position ? "in front of" : "behind"} ${reference.name}`;
         }
 
         return `${side}, ${horizontal}, ${vertical}`;
