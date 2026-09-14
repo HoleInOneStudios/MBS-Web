@@ -9,7 +9,7 @@ let imex;
 
 document.addEventListener('DOMContentLoaded', () => {
     field = new Field("canvas", 300 / 3, 160 / 3, 60 / 3, 10, "white", "green", "fieldControls", "bgColor", "lnColor", "lnWidth", "mouseX", "mouseY", "fieldType");
-    show = new Show("showTitle", "showTitleInput", "nextSet", "currentSet", "prevSet", "count", "tempo", "speed", "tempoControl", "speedControl", "moveCountControl", "moveStepSizeControl", "move", "path", "playerSelect", "playerId", "playerName", "playerColor", "addPlayer", "removePlayer", "beginning", "previousSetButton", "previousStep", "playPause", "nextStep", "nextSetButton", "end");
+    show = new Show("showTitle", "showTitleInput", "prevSet", "currentSet", "nextSet", "count", "tempo", "speed", "tempoControl", "speedControl", "moveCountControl", "moveStepSizeControl", "move", "path", "playerSelect", "playerId", "playerName", "playerColor", "addPlayer", "removePlayer", "beginning", "previousSetButton", "previousStep", "playPause", "nextStep", "nextSetButton", "end");
 
     let testPlayers = [
         new Player("T1", "Trumpet 1", "#e63946", [{ x: 35, y: 16 }, { x: 25, y: 10 }, { x: 20, y: 12 }, { x: 50, y: 6 }, { x: 25, y: 12 }, { x: 35, y: 16 }]),

@@ -31,7 +31,8 @@ Then open `http://localhost/`.
 - **Players** — select, add, remove, rename, recolor, or assign a section-style
   ID such as `T1`, `B1`, or `C1`.
 - **Info** — shows set/count/playback information plus the mouse position in
-  chart-style and raw canvas coordinates.
+  chart-style and raw canvas coordinates. Set information is displayed in
+  previous, current, then next order.
 
 ## Coordinates
 
