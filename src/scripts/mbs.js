@@ -11,16 +11,35 @@ document.addEventListener('DOMContentLoaded', () => {
     field = new Field("canvas", 300 / 3, 160 / 3, 60 / 3, "#009900", "fieldControls", "bgColor", "mouseX", "mouseY", "fieldType");
     show = new Show("showTitle", "showTitleInput", "prevSet", "currentSet", "nextSet", "count", "tempo", "speed", "tempoControl", "speedControl", "moveCountControl", "moveStepSizeControl", "move", "path", "playerSelect", "playerId", "playerName", "playerColor", "addPlayer", "removePlayer", "isolatePlayer", "beginning", "previousSetButton", "previousStep", "playPause", "nextStep", "nextSetButton", "end");
 
-    let testPlayers = [
-        new Player("T1", "Trumpet 1", "#e63946", [{ x: 35, y: 16 }, { x: 25, y: 10 }, { x: 20, y: 12 }, { x: 50, y: 6 }, { x: 25, y: 12 }, { x: 35, y: 16 }]),
-        new Player("T2", "Trumpet 2", "#e63946", [{ x: 45, y: 16 }, { x: 42, y: 14 }, { x: 32, y: 18 }, { x: 66, y: 12 }, { x: 35, y: 20 }, { x: 45, y: 16 }]),
-        new Player("M1", "Mellophone 1", "#e9c46a", [{ x: 55, y: 16 }, { x: 58, y: 14 }, { x: 44, y: 24 }, { x: 78, y: 26 }, { x: 45, y: 28 }, { x: 55, y: 16 }]),
-        new Player("B1", "Baritone 1", "#2a9d8f", [{ x: 65, y: 16 }, { x: 75, y: 10 }, { x: 56, y: 30 }, { x: 66, y: 42 }, { x: 55, y: 36 }, { x: 65, y: 16 }]),
-        new Player("C1", "Clarinet 1", "#457b9d", [{ x: 35, y: 36 }, { x: 25, y: 43 }, { x: 44, y: 30 }, { x: 50, y: 48 }, { x: 45, y: 36 }, { x: 35, y: 36 }]),
-        new Player("C2", "Clarinet 2", "#457b9d", [{ x: 45, y: 36 }, { x: 42, y: 39 }, { x: 56, y: 24 }, { x: 34, y: 42 }, { x: 55, y: 28 }, { x: 45, y: 36 }]),
-        new Player("F1", "Flute 1", "#7b5ea7", [{ x: 55, y: 36 }, { x: 58, y: 39 }, { x: 68, y: 18 }, { x: 22, y: 26 }, { x: 65, y: 20 }, { x: 55, y: 36 }]),
-        new Player("F2", "Flute 2", "#7b5ea7", [{ x: 65, y: 36 }, { x: 75, y: 43 }, { x: 80, y: 12 }, { x: 34, y: 12 }, { x: 75, y: 12 }, { x: 65, y: 36 }])
+    let testPlayers = [];
+    let sections = [
+        { id: "T", name: "Trumpet", color: "#e63946", count: 16 },
+        { id: "M", name: "Mellophone", color: "#e9c46a", count: 8 },
+        { id: "B", name: "Baritone", color: "#2a9d8f", count: 10 },
+        { id: "C", name: "Clarinet", color: "#457b9d", count: 16 },
+        { id: "F", name: "Flute", color: "#7b5ea7", count: 12 },
+        { id: "P", name: "Percussion", color: "#b565a7", count: 8 }
     ];
+    let playerIndex = 0;
+
+    sections.forEach(section => {
+        for (let number = 1; number <= section.count; number++) {
+            let column = playerIndex % 10;
+            let row = Math.floor(playerIndex / 10);
+            let x = 27 + column * 5;
+            let y = 12 + row * 5;
+            let sets = [
+                { x: x, y: y },
+                { x: 20 + column * 6.7, y: 8 + row * 6.2 },
+                { x: 24 + column * 5.8 + row * 1.5, y: 10 + row * 5.2 },
+                { x: 50 + (y - 27) * .75, y: 27 + (x - 50) * .55 },
+                { x: 20 + column * 6.7, y: 45 - row * 6.2 },
+                { x: x, y: y }
+            ];
+            testPlayers.push(new Player(`${section.id}${number}`, `${section.name} ${number}`, section.color, sets));
+            playerIndex++;
+        }
+    });
     show.load(testPlayers, [
         { count: 16, stepSize: .625 },
         { count: 16, stepSize: .625 },
@@ -28,7 +47,7 @@ document.addEventListener('DOMContentLoaded', () => {
         { count: 24, stepSize: .625 },
         { count: 8, stepSize: .4166666667 },
         { count: 16, stepSize: .625 }
-    ], "Color Test Show");
+    ], "70 Member Test Show");
 
     imex = new ImportExport(show, "import", "export", "importFile", "exportText", "download");
 

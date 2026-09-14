@@ -8,6 +8,9 @@ A browser-based marching-band drill viewer and test environment. It displays a
 football field on a canvas, animates players through sets, and supports JSON
 import/export for shows.
 
+The included test show has 70 members across trumpet, mellophone, baritone,
+clarinet, flute, and percussion sections.
+
 ## Run locally
 
 This project is a static HTML, CSS, and JavaScript site. From the repository
