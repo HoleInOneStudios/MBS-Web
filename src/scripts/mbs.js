@@ -8,7 +8,7 @@ let imex;
 let objs;
 
 document.body.onload = async () => {
-    field = new Field("canvas", 300 / 3, 160 / 3, 60 / 3, 10, "white", "green", "fieldControls", "bgColor", "lnColor", "lnWidth", "mouseX", "mouseY");
+    field = new Field("canvas", 300 / 3, 160 / 3, 60 / 3, 10, "white", "green", "fieldControls", "bgColor", "lnColor", "lnWidth", "mouseX", "mouseY", "fieldType", "stepSize");
 
     objs = new Objects(4, 20, 0, 20, "nextSet", "currentSet", "prevSet", "count", "interval", "intervalControl", "countControl", "move", "path", "objSelect", "addObj", "removeObj");
     objs.add(new FieldObject());

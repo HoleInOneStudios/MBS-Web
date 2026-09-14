@@ -42,15 +42,27 @@
 						<input title="line color" type="color" id="lnColor" value="#ffffff">
 						<label title="Line width control label" for="lnWidth">Line Size:</label>
 						<input title="line width" type="range" id="lnWidth" min="5" max="15" value="10">
+						<label title="field type control label" for="fieldType">Field:</label>
+						<select title="field type" id="fieldType">
+							<option value="NCAA">NCAA</option>
+							<option value="High School">High School</option>
+							<option value="NFL">NFL</option>
+						</select>
+						<label title="step size control label" for="stepSize">Step Size:</label>
+						<select title="step size" id="stepSize">
+							<option value="0.625">8 to 5</option>
+							<option value="0.8333333333">6 to 5</option>
+							<option value="0.4166666667">12 to 5</option>
+						</select>
 					</div>
 				</div>
 				<div id="fieldInfo" class="controls">
 					<h3>Field Info</h3>
 					<div>
-						<label title="mouse x label" for="mouseX">X: </label>
-						<span title="mouse x" id="mouseX">0</span>
-						<label title="mouse y label" for="mouseY">Y: </label>
-						<span title="mouse y" id="mouseY">0</span>
+						<label title="chart location label" for="mouseX">Chart Location: </label>
+						<span title="chart location" id="mouseX">0</span>
+						<label title="mouse coordinates label" for="mouseY">Coordinates: </label>
+						<span title="mouse coordinates" id="mouseY">0</span>
 					</div>
 				</div>
 				<div id="objControls" class="controls">

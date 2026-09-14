@@ -78,7 +78,7 @@ class Objects {
         this.moveCon = document.getElementById(moveCon);
         this.pathCon = document.getElementById(pathCon);
         this.move = this.moveCon.checked;
-        this.path = this.moveCon.checked;
+        this.path = this.pathCon.checked;
 
         //Object Select
         this.objDropdown = document.getElementById(objDropdown);
@@ -111,7 +111,10 @@ class Objects {
     }
 
     remove(obj) {
-        this.List.splice(this.List.indexOf(obj), 1);
+        let index = this.List.indexOf(obj);
+        if (index >= 0) {
+            this.List.splice(index, 1);
+        }
         this.updateDropdown();
     }
 
@@ -135,8 +138,21 @@ class Objects {
         //set selected
         this.selected = this.List.find(element => element.name == this.objDropdown.value);
 
+        //Update Sets
+        this.maxSet = 0;
+        this.List.forEach(element => {
+            if (element.sets.length > this.maxSet) {
+                this.maxSet = element.sets.length;
+            }
+        });
+        if (this.maxSet > 0) {
+            this.currentSet %= this.maxSet;
+            this.nextSet = (this.currentSet + 1) % this.maxSet;
+            this.previousSet = (this.currentSet - 1 + this.maxSet) % this.maxSet;
+        }
+
         //Update Loop
-        if (this.move) {
+        if (this.move && this.maxSet > 0) {
             this.time++;
             if (this.time >= this.interval) {
                 this.currentCount++;
@@ -144,23 +160,16 @@ class Objects {
                 this.time = 0;
                 //console.log("frame");
                 if (this.currentCount >= this.Count) {
-                    this.currentSet++;
+                    this.currentSet = (this.currentSet + 1) % this.maxSet;
                     this.nextSet = (this.currentSet + 1) % this.maxSet;
-                    this.previousSet = (this.currentSet - 1) % this.maxSet;
+                    this.previousSet = (this.currentSet - 1 + this.maxSet) % this.maxSet;
                     this.currentCount = 0;
                     //console.log("count");
-                    if (this.currentSet >= this.maxSet) {
-                        this.currentSet = 0;
-                        //console.log("set");
-                    }
                 }
             }
         }
         
         this.List.forEach(element => {
-            if (element.sets.length - 1 > this.maxSet) {
-                this.maxSet = element.sets.length;
-            }
             element.update(this);
         });
 

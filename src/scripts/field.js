@@ -1,5 +1,5 @@
 class Field {
-    constructor (id, width, height, hashDistance, lnWidth, lnColor, bgColor, controlId, bgColorControlId, lnControlControlId, lnWidthControlId, mouseXId, mouseYId) {
+    constructor (id, width, height, hashDistance, lnWidth, lnColor, bgColor, controlId, bgColorControlId, lnControlControlId, lnWidthControlId, mouseXId, mouseYId, fieldTypeControlId, stepSizeControlId) {
         this.id = id;
         this.controlId = controlId;
         this.bgColorControlId = bgColorControlId;
@@ -8,6 +8,8 @@ class Field {
 
         this.mouseXId = mouseXId;
         this.mouseYId = mouseYId;
+        this.fieldTypeControlId = fieldTypeControlId;
+        this.stepSizeControlId = stepSizeControlId;
 
         this.width = width;
         this.height = height;
@@ -16,6 +18,8 @@ class Field {
         this.lnWidth = lnWidth;
         this.lnColor = lnColor;
         this.bgColor = bgColor;
+        this.mouseX = 0;
+        this.mouseY = 0;
 
         this.firstSetup();
 
@@ -32,6 +36,16 @@ class Field {
         this.lnWidthControl = document.getElementById(this.lnWidthControlId);
         this.mouseXDis = document.getElementById(this.mouseXId);
         this.mouseYDis = document.getElementById(this.mouseYId);
+        this.fieldTypeControl = document.getElementById(this.fieldTypeControlId);
+        this.stepSizeControl = document.getElementById(this.stepSizeControlId);
+
+        this.fieldTypes = {
+            "NCAA": 20,
+            "High School": 160 / 9,
+            "NFL": 283 / 12
+        };
+        this.hashDistance = this.fieldTypes[this.fieldTypeControl.value];
+        this.stepSize = this.stepSizeControl.value;
 
         this.bgColorControl.onchange = () => {
             this.bgColor = this.bgColorControl.value;
@@ -42,8 +56,14 @@ class Field {
         this.lnWidthControl.onchange = () => {
             this.lnWidth = this.lnWidthControl.value;
         };
+        this.fieldTypeControl.onchange = () => {
+            this.hashDistance = this.fieldTypes[this.fieldTypeControl.value];
+        };
+        this.stepSizeControl.onchange = () => {
+            this.stepSize = this.stepSizeControl.value;
+        };
         this.canvas.addEventListener('mousemove', (event) => {
-            var rect = canvas.getBoundingClientRect();
+            var rect = this.canvas.getBoundingClientRect();
             this.mouseX = parseInt((event.clientX - rect.left) / this.getScale());
             this.mouseY = parseInt((event.clientY - rect.top) / this.getScale());
         });
@@ -111,8 +131,58 @@ class Field {
     }
 
     update() {
-        this.mouseXDis.innerText = this.mouseX;
-        this.mouseYDis.innerText = this.mouseY;
+        this.mouseXDis.innerText = this.getChartLocation(this.mouseX, this.mouseY);
+        this.mouseYDis.innerText = `${this.mouseX}, ${this.mouseY}`;
+    }
+
+    getChartLocation(x, y) {
+        let side = x <= this.width / 2 ? "Side 1" : "Side 2";
+        let sideX = x <= this.width / 2 ? x : this.width - x;
+        let yardLine = Math.round(sideX / 5) * 5;
+        let steps = Math.abs(sideX - yardLine) / this.stepSize;
+        let horizontal;
+
+        if (steps < .05) {
+            horizontal = `on ${yardLine} yard line`;
+        }
+        else {
+            horizontal = `${this.formatSteps(steps)} steps ${sideX > yardLine ? "inside" : "outside"} ${yardLine} yard line`;
+        }
+
+        let references = [
+            { position: 0, name: "front sideline" },
+            { position: this.hashDistance, name: "front hash" },
+            { position: this.height - this.hashDistance, name: "back hash" },
+            { position: this.height, name: "back sideline" }
+        ];
+        let reference = references[0];
+        references.forEach(element => {
+            if (Math.abs(y - element.position) < Math.abs(y - reference.position)) {
+                reference = element;
+            }
+        });
+        steps = Math.abs(y - reference.position) / this.stepSize;
+        let vertical;
+
+        if (steps < .05) {
+            vertical = `on ${reference.name}`;
+        }
+        else if (reference.name == "front sideline") {
+            vertical = `${this.formatSteps(steps)} steps behind ${reference.name}`;
+        }
+        else if (reference.name == "back sideline") {
+            vertical = `${this.formatSteps(steps)} steps in front of ${reference.name}`;
+        }
+        else {
+            vertical = `${this.formatSteps(steps)} steps ${y > reference.position ? "behind" : "in front of"} ${reference.name}`;
+        }
+
+        return `${side}, ${horizontal}, ${vertical}`;
+    }
+
+    formatSteps(steps) {
+        steps = Math.round(steps * 10) / 10;
+        return Number.isInteger(steps) ? steps : steps.toFixed(1);
     }
 }
 

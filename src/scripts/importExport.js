@@ -34,7 +34,7 @@ class ImportExport {
         this.objs.List = [];
         let data = JSON.parse(J);
         this.objs.countControl.value = data.Count;
-        this.objs.interval = data.interval;
+        this.objs.intervalControl.value = data.Interval;
         data.List.forEach(element => {
             this.objs.add(new FieldObject(element.sets, element.name));
         });
@@ -63,6 +63,8 @@ class ImportExport {
         reader.onload = async (e) => {
             this.import(e.target.result);
         }
+
+        reader.readAsText(e.target.files[0]);
         
     }
 }
