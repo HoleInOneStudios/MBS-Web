@@ -1,69 +1,70 @@
-import { FieldObject } from "./fieldObject.js";
+import { Player } from "./player.js";
 
 class ImportExport {
-    constructor (objs, field, imButton, exButton,
-        imFile, exText, dnButton) {
-        this.field = field;
-        this.objs = objs;
-        
+    constructor (show, imButton, exButton, imFile, exText, dnButton) {
+        this.show = show;
         this.imButton = document.getElementById(imButton);
         this.exButton = document.getElementById(exButton);
         this.imFile = document.getElementById(imFile);
         this.exText = document.getElementById(exText);
         this.dnButton = document.getElementById(dnButton);
 
-        this.exButton.onclick = async () => {
+        this.exButton.onclick = () => {
             this.export();
-        }
-        this.imButton.onclick = async () => {
+        };
+        this.imButton.onclick = () => {
             this.import(this.exText.value);
-        }
-        this.dnButton.onclick = async () => {
+        };
+        this.dnButton.onclick = () => {
             this.download();
-        }
-        this.imFile.onchange = async (e) => {
+        };
+        this.imFile.onchange = (e) => {
             this.upload(e);
-        }
-    }
-    
-    async export() {
-        this.exText.value = JSON.stringify(await this.objs.toJson());
+        };
     }
 
-    async import(J) {
-        this.objs.List = [];
+    export() {
+        this.exText.value = JSON.stringify(this.show.toJson());
+    }
+
+    import(J) {
         let data = JSON.parse(J);
-        this.objs.countControl.value = data.Count;
-        this.objs.interval = data.interval;
-        data.List.forEach(element => {
-            this.objs.add(new FieldObject(element.sets, element.name));
-        });
+        let players;
+        let moves;
+
+        if (data.Players) {
+            players = data.Players.map(element => new Player(element.id, element.name, element.color, element.sets));
+            moves = data.Moves;
+        }
+        else {
+            players = data.List.map((element, index) => new Player(element.name || `P${index + 1}`, element.name || `Player ${index + 1}`, "#ff0000", element.sets));
+            moves = [];
+            let maxSet = Math.max(...players.map(element => element.sets.length));
+            for (let i = 0; i < maxSet; i++) {
+                moves.push({ count: data.Count || 16, stepSize: .625 });
+            }
+        }
+
+        this.show.load(players, moves, data.Title);
     }
 
-    async download() {
+    download() {
         this.export();
         var element = document.createElement('a');
         element.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(this.exText.value));
         element.setAttribute('download', 'data.json');
-
         element.style.display = 'none';
         document.body.appendChild(element);
-
         element.click();
-
         document.body.removeChild(element);
-
     }
 
-    async upload(e) {
-        //console.log(e.target.files);
-
+    upload(e) {
         var reader = new FileReader();
-
-        reader.onload = async (e) => {
+        reader.onload = (e) => {
             this.import(e.target.result);
-        }
-        
+        };
+        reader.readAsText(e.target.files[0]);
     }
 }
 
