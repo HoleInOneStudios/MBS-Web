@@ -1,5 +1,5 @@
 class Field {
-    constructor (id, width, height, hashDistance, lnWidth, lnColor, bgColor, controlId, bgColorControlId, lnControlControlId, lnWidthControlId, mouseXId, mouseYId, fieldTypeControlId, stepSizeControlId) {
+    constructor (id, width, height, hashDistance, lnWidth, lnColor, bgColor, controlId, bgColorControlId, lnControlControlId, lnWidthControlId, mouseXId, mouseYId, fieldTypeControlId) {
         this.id = id;
         this.controlId = controlId;
         this.bgColorControlId = bgColorControlId;
@@ -9,7 +9,6 @@ class Field {
         this.mouseXId = mouseXId;
         this.mouseYId = mouseYId;
         this.fieldTypeControlId = fieldTypeControlId;
-        this.stepSizeControlId = stepSizeControlId;
 
         this.width = width;
         this.height = height;
@@ -37,7 +36,6 @@ class Field {
         this.mouseXDis = document.getElementById(this.mouseXId);
         this.mouseYDis = document.getElementById(this.mouseYId);
         this.fieldTypeControl = document.getElementById(this.fieldTypeControlId);
-        this.stepSizeControl = document.getElementById(this.stepSizeControlId);
 
         this.fieldTypes = {
             "NCAA": 20,
@@ -45,7 +43,7 @@ class Field {
             "NFL": 283 / 12
         };
         this.hashDistance = this.fieldTypes[this.fieldTypeControl.value];
-        this.stepSize = this.stepSizeControl.value;
+        this.stepSize = .625;
 
         this.bgColorControl.onchange = () => {
             this.bgColor = this.bgColorControl.value;
@@ -58,9 +56,6 @@ class Field {
         };
         this.fieldTypeControl.onchange = () => {
             this.hashDistance = this.fieldTypes[this.fieldTypeControl.value];
-        };
-        this.stepSizeControl.onchange = () => {
-            this.stepSize = this.stepSizeControl.value;
         };
         this.canvas.addEventListener('mousemove', (event) => {
             var rect = this.canvas.getBoundingClientRect();
@@ -133,6 +128,10 @@ class Field {
     update() {
         this.mouseXDis.innerText = this.getChartLocation(this.mouseX, this.mouseY);
         this.mouseYDis.innerText = `${this.mouseX}, ${this.mouseY}`;
+    }
+
+    setStepSize(stepSize) {
+        this.stepSize = stepSize;
     }
 
     getChartLocation(x, y) {
