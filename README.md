@@ -22,6 +22,15 @@ py -3 -m http.server 80 --directory src
 
 Then open `http://localhost/`.
 
+## Progressive Web App
+
+MBS Web can be installed as a Progressive Web App from a supported browser.
+After the first visit, its app shell and local assets are cached so the app can
+open offline. When online, the app checks the server for each local file and
+refreshes its cached copy automatically; when offline, it uses the latest
+cached version. GitHub Pages provides the HTTPS required for installation;
+`localhost` also supports PWA testing during development.
+
 ## Controls
 
 - **Show** — set the show title and tempo. These values are included when

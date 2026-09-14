@@ -8,6 +8,10 @@ let show;
 let imex;
 
 document.addEventListener('DOMContentLoaded', () => {
+    if ('serviceWorker' in navigator) {
+        navigator.serviceWorker.register('./service-worker.js');
+    }
+
     field = new Field("canvas", 300 / 3, 160 / 3, 60 / 3, "#009900", "fieldControls", "bgColor", "mouseX", "mouseY", "fieldType");
     show = new Show("showTitle", "showTitleInput", "prevSet", "currentSet", "nextSet", "count", "tempo", "speed", "tempoControl", "speedControl", "moveCountControl", "moveStepSizeControl", "move", "path", "playerSelect", "playerId", "playerName", "playerColor", "addPlayer", "removePlayer", "isolatePlayer", "beginning", "previousSetButton", "previousStep", "playPause", "nextStep", "nextSetButton", "end");
 
