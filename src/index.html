@@ -1,123 +1,121 @@
 <!DOCTYPE html>
 <html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="keywords" content="Marching band, drill" />
+    <meta name="description" content="Marching Band Drill Creator and Viewer" />
+    <meta name="author" content="Benjamin Bowles" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-	<head>
-		<!-- Meta Tags -->
-		<meta charset="UTF-8" />
-		<meta name="keywords" content="Marching band, drill" />
-		<meta name="description" content="Marching Band Drill Creator and Viewer" />
-		<meta name="author" content="Benjamin Bowles" />
-		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="./style.css" />
+    <link rel="apple-touch-icon" sizes="180x180" href="./image/apple-touch-icon.png" />
+    <link rel="icon" type="image/png" sizes="32x32" href="./image/favicon-32x32.png" />
+    <link rel="icon" type="image/png" sizes="16x16" href="./image/favicon-16x16.png" />
 
-		<!-- Link Tags -->
-		<link rel="stylesheet" href="./style.css" />
+    <script src="./scripts/mbs.js" type="module"></script>
+    <title>MBS - Web</title>
+  </head>
 
-		<link rel="apple-touch-icon" sizes="180x180" href="./image/apple-touch-icon.png">
-		<link rel="icon" type="image/png" sizes="32x32" href="./image/favicon-32x32.png">
-		<link rel="icon" type="image/png" sizes="16x16" href="./image/favicon-16x16.png">
+  <body>
+    <header class="site-header">
+      <h1>Marching Band Simulator - Web Edition</h1>
+    </header>
 
-		<!-- Script Tags -->
-		<script src="./scripts/mbs.js" type="module" defer async></script>
-		<script src="https://kit.fontawesome.com/5942bf0d70.js" crossorigin="anonymous"></script>
+    <main class="app-main">
+      <section class="field-area" aria-label="Marching field">
+        <canvas id="canvas" aria-label="Marching field">
+          <p>Your browser does not support the HTML5 canvas tag.</p>
+        </canvas>
+      </section>
 
-		<!-- Head -->
-		<title>MBS - Web</title>
-	</head>
+      <div id="controls" aria-label="Simulator controls">
+        <section id="fieldControls" class="controls" aria-labelledby="field-controls-heading">
+          <h2 id="field-controls-heading">Field Controls</h2>
+          <div class="control-grid">
+            <label for="bgColor">Background</label>
+            <input type="color" id="bgColor" value="#009900" />
+            <label for="lnColor">Line</label>
+            <input type="color" id="lnColor" value="#ffffff" />
+            <label for="lnWidth">Line Size</label>
+            <input type="range" id="lnWidth" min="5" max="15" value="10" />
+            <label for="fieldType">Field</label>
+            <select id="fieldType">
+              <option value="NCAA">NCAA</option>
+              <option value="High School">High School</option>
+              <option value="NFL">NFL</option>
+            </select>
+            <label for="stepSize">Step Size</label>
+            <select id="stepSize">
+              <option value="0.625">8 to 5</option>
+              <option value="0.8333333333">6 to 5</option>
+              <option value="0.4166666667">12 to 5</option>
+            </select>
+          </div>
+        </section>
 
-	<body>
-		<header title="header">
-			<h1>Marching Band Simulator - WEB EDITION</h1>
-		</header>
-		<main title="main content">
-			<canvas id="canvas" title="field">
-				<p>Your browser does not support the HTML5 canvas tag.</p>
-			</canvas>
-			<div id="controls">
-				<div id="fieldControls" class="controls">
-					<h3>Field Controls</h3>
-					<div>
-						<label title="Background color control label" for="bgColor">Background: </label>
-						<input title="background color" type="color" id="bgColor" value="#009900">
-						<label title="Line color control label" for="lnColor">Line: </label>
-						<input title="line color" type="color" id="lnColor" value="#ffffff">
-						<label title="Line width control label" for="lnWidth">Line Size:</label>
-						<input title="line width" type="range" id="lnWidth" min="5" max="15" value="10">
-						<label title="field type control label" for="fieldType">Field:</label>
-						<select title="field type" id="fieldType">
-							<option value="NCAA">NCAA</option>
-							<option value="High School">High School</option>
-							<option value="NFL">NFL</option>
-						</select>
-						<label title="step size control label" for="stepSize">Step Size:</label>
-						<select title="step size" id="stepSize">
-							<option value="0.625">8 to 5</option>
-							<option value="0.8333333333">6 to 5</option>
-							<option value="0.4166666667">12 to 5</option>
-						</select>
-					</div>
-				</div>
-				<div id="fieldInfo" class="controls">
-					<h3>Field Info</h3>
-					<div>
-						<label title="chart location label" for="mouseX">Chart Location: </label>
-						<span title="chart location" id="mouseX">0</span>
-						<label title="mouse coordinates label" for="mouseY">Coordinates: </label>
-						<span title="mouse coordinates" id="mouseY">0</span>
-					</div>
-				</div>
-				<div id="objControls" class="controls">
-					<h3>Object Controls</h3>
-					<div>
-						<label title="object selector label" for="objSelect">Selected Object:</label>
-						<select title="select object" id="objSelect"></select>
-						<button title="add object" id="addObj">Add</button>
-						<button title="remove object" id="removeObj">Remove</button>
-					</div>
-				</div>
-				<div id="simInfo" class="controls">
-					<h3>Simulation Info</h3>
-					<div>
-						<label title="previous set info label" for="prevSet">Previous Set:</label>
-						<span title="previous set" id="prevSet">0</span>
-						<label title="current set info label" for="currentSet">Current Set:</label>
-						<span title="current set" id="currentSet">0</span>
-						<label title="next set info label" for="nextSet">Next Set:</label>
-						<span title="next set" id="nextSet">0</span>
-						<label title="count info label" for="currentSet">Count:</label>
-						<span title="count" id="count">0</span>
-						<label title="interval info label" for="interval">Interval:</label>
-						<span title="interval" id="interval">0</span>
-					</div>
-				</div>
-				<div id="simControls" class="controls">
-					<h3>Simulation Controls</h3>
-					<div>
-						<label title="interval control label" for="intervalControl">Interval:</label>
-						<input title="simulation speed" type="range" id="intervalControl" min="1" max="10" value="1">
-						<label title="count control label" for="countControl">Count:</label>
-						<input title="simulation count" type="range" id="countControl"></input>
-						<label title="move control label" for="move">Move:</label>
-						<input title="reset" type="checkbox" id="move" checked="true"></input>
-						<label title="path control label" for="path">Paths:</label>
-						<input title="reset" type="checkbox" id="path"></input>
-					</div>
-				</div>
-				<div id="importExport" class="controls">
-					<h3>Import/Export</h3>
-					<div>
-						<button title="import" id="import">Import</button>
-						<button title="export" id="export">Export</button>
+        <section id="fieldInfo" class="controls" aria-labelledby="field-info-heading">
+          <h2 id="field-info-heading">Field Info</h2>
+          <div class="control-grid">
+            <span>Chart Location</span>
+            <output id="mouseX">0</output>
+            <span>Coordinates</span>
+            <output id="mouseY">0</output>
+          </div>
+        </section>
 
-						<textarea title="exported text area" id="exportText" style="grid-column: span 2;">{}</textarea>
+        <section id="objControls" class="controls" aria-labelledby="object-controls-heading">
+          <h2 id="object-controls-heading">Object Controls</h2>
+          <div class="control-grid">
+            <label for="objSelect">Selected Object</label>
+            <select id="objSelect"></select>
+            <button type="button" id="addObj">Add</button>
+            <button type="button" id="removeObj">Remove</button>
+          </div>
+        </section>
 
-						<input title="import file" type="file" id="importFile" accept=".json" />
+        <section id="simInfo" class="controls" aria-labelledby="simulation-info-heading">
+          <h2 id="simulation-info-heading">Simulation Info</h2>
+          <div class="control-grid">
+            <span>Previous Set</span>
+            <output id="prevSet">0</output>
+            <span>Current Set</span>
+            <output id="currentSet">0</output>
+            <span>Next Set</span>
+            <output id="nextSet">0</output>
+            <span>Count</span>
+            <output id="count">0</output>
+            <span>Interval</span>
+            <output id="interval">0</output>
+          </div>
+        </section>
 
-						<button title="download" id="download">Download</button>
+        <section id="simControls" class="controls" aria-labelledby="simulation-controls-heading">
+          <h2 id="simulation-controls-heading">Simulation Controls</h2>
+          <div class="control-grid">
+            <label for="intervalControl">Interval</label>
+            <input type="range" id="intervalControl" min="1" max="10" value="1" />
+            <label for="countControl">Count</label>
+            <input type="range" id="countControl" />
+            <label for="move">Move</label>
+            <input type="checkbox" id="move" checked />
+            <label for="path">Paths</label>
+            <input type="checkbox" id="path" />
+          </div>
+        </section>
 
-					</div>
-				</div>
-			</div>
-		</main>
-	</body>
-
+        <section id="importExport" class="controls" aria-labelledby="import-export-heading">
+          <h2 id="import-export-heading">Import / Export</h2>
+          <div class="control-grid">
+            <button type="button" id="import">Import</button>
+            <button type="button" id="export">Export</button>
+            <label class="sr-only" for="exportText">Drill JSON</label>
+            <textarea id="exportText" class="full-width">{}</textarea>
+            <label class="full-width" for="importFile">Import JSON file</label>
+            <input class="full-width" type="file" id="importFile" accept=".json" />
+            <button type="button" id="download" class="full-width">Download</button>
+          </div>
+        </section>
+      </div>
+    </main>
+  </body>
 </html>

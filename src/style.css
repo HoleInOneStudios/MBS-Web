@@ -3,48 +3,114 @@
   src: url('./fonts/Clarendon-Light.otf');
 }
 
+* {
+  box-sizing: border-box;
+}
+
 html {
   font-family: Verdana, Geneva, Tahoma, sans-serif;
+}
+
+body {
+  margin: 0;
+  padding: 1rem;
+}
+
+h1,
+h2 {
+  margin-top: 0;
 }
 
 h1 {
   font-size: 2em;
 }
 
-h3 {
+h2 {
+  font-size: 1.1em;
+}
+
+button,
+input,
+select,
+textarea {
+  font: inherit;
+}
+
+.site-header,
+.app-main {
+  max-width: 90rem;
+  margin: 0 auto;
+}
+
+.site-header {
+  margin-bottom: 1rem;
+}
+
+.field-area {
+  overflow-x: auto;
 }
 
 canvas {
+  display: block;
   border: solid #000;
   margin: 0 auto;
 }
 
-.controls > div {
+#controls {
   display: grid;
-  grid-template-columns: 1fr 1fr;
-  grid-gap: 10px;
+  grid-template-columns: repeat(auto-fit, minmax(17rem, 1fr));
+  gap: 1rem;
+  margin-top: 1rem;
 }
 
 .controls {
   border: solid;
-  
-  width: max-content;
-  padding: .5em;
-  margin-left: .5em;
-  margin-right: .5em;
-  margin-bottom: .5em;
+  padding: 1rem;
 }
 
-#controls {
-  display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
-  justify-content: start;
+.controls h2 {
+  margin-bottom: 1rem;
 }
 
-a {
-  text-align: center;
-  text-decoration: none;
-  color: #000;
-  font-size: 2em;
+.control-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  gap: .75rem;
+  align-items: center;
+}
+
+.control-grid output {
+  overflow-wrap: anywhere;
+}
+
+.full-width {
+  grid-column: 1 / -1;
+  width: 100%;
+}
+
+textarea {
+  min-height: 7rem;
+  resize: vertical;
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+@media (max-width: 40rem) {
+  body {
+    padding: .75rem;
+  }
+
+  #controls {
+    grid-template-columns: 1fr;
+  }
 }
