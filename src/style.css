@@ -23,6 +23,9 @@ canvas { display: block; border: solid #000; margin: 0 auto; }
 .info-item output { min-height: 1.25rem; font-size: 1.1em; white-space: nowrap; overflow-x: auto; }
 .mouse-position output:last-child { font-size: .9em; }
 .full-width { grid-column: 1 / -1; width: 100%; }
+.transport-controls { display: grid; grid-template-columns: repeat(7, minmax(0, 1fr)); gap: .4rem; }
+.field-transport { display: flex; width: max-content; max-width: 100%; margin: 0 auto .5rem; }
+.field-transport button { width: 2.5rem; }
 .import-export { max-width: 48rem; margin: .5rem auto 0; }
 textarea { min-height: 5rem; resize: vertical; }
 @media (max-width: 55rem) { .show-info { grid-template-columns: repeat(3, minmax(0, 1fr)); } .field-info { grid-template-columns: 1fr; } }

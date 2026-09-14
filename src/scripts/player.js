@@ -16,7 +16,7 @@ class Player {
 
     update(show) {
         if (show.nextSet < this.sets.length && show.currentSet < this.sets.length) {
-            this.pos = lerp2(this.sets[show.currentSet], this.sets[show.nextSet], show.currentCount / show.getMove().count);
+            this.pos = lerp2(this.sets[show.currentSet], this.sets[show.nextSet], show.currentCount / show.getTransitionMove().count);
         }
     }
 

@@ -1,5 +1,5 @@
 class Show {
-    constructor (showTitleDis, showTitleControl, previousSetDis, currentSetDis, nextSetDis, countDis, tempoDis, speedDis, tempoControl, speedControl, moveCountControl, moveStepSizeControl, moveCon, pathCon, playerSelect, playerId, playerName, playerColor, playerAdd, playerRemove) {
+    constructor (showTitleDis, showTitleControl, previousSetDis, currentSetDis, nextSetDis, countDis, tempoDis, speedDis, tempoControl, speedControl, moveCountControl, moveStepSizeControl, moveCon, pathCon, playerSelect, playerId, playerName, playerColor, playerAdd, playerRemove, beginning, previousSet, previousStep, playPause, nextStep, nextSet, end) {
         this.Players = [];
         this.Moves = [];
         this.selected = undefined;
@@ -32,6 +32,13 @@ class Show {
         this.playerColor = document.getElementById(playerColor);
         this.playerAdd = document.getElementById(playerAdd);
         this.playerRemove = document.getElementById(playerRemove);
+        this.beginning = document.getElementById(beginning);
+        this.previousSetButton = document.getElementById(previousSet);
+        this.previousStepButton = document.getElementById(previousStep);
+        this.playPause = document.getElementById(playPause);
+        this.nextStepButton = document.getElementById(nextStep);
+        this.nextSetButton = document.getElementById(nextSet);
+        this.end = document.getElementById(end);
         this.move = this.moveCon.checked;
         this.path = this.pathCon.checked;
 
@@ -73,6 +80,16 @@ class Show {
         this.playerRemove.onclick = () => {
             this.remove(this.selected);
         };
+        this.beginning.onclick = () => this.goToSet(0);
+        this.previousSetButton.onclick = () => this.goToSet(this.currentSet - 1);
+        this.previousStepButton.onclick = () => this.previousStep();
+        this.playPause.onclick = () => {
+            this.moveCon.checked = !this.moveCon.checked;
+            this.updatePlayPause();
+        };
+        this.nextStepButton.onclick = () => this.nextStep();
+        this.nextSetButton.onclick = () => this.goToSet(this.currentSet + 1);
+        this.end.onclick = () => this.goToSet(this.maxSet - 1);
     }
 
     add(player) {
@@ -141,10 +158,56 @@ class Show {
         return this.Moves[this.currentSet] || { count: 1, stepSize: .625 };
     }
 
+    getTransitionMove() {
+        return this.Moves[this.nextSet] || { count: 1, stepSize: .625 };
+    }
+
     updateMoveControls() {
         let move = this.getMove();
         this.moveCountControl.value = move.count;
         this.moveStepSizeControl.value = move.stepSize;
+    }
+
+    updatePlayPause() {
+        this.playPause.innerText = this.moveCon.checked ? "❚❚" : "▶";
+        this.playPause.setAttribute("aria-label", this.moveCon.checked ? "Pause" : "Play");
+        this.playPause.title = this.moveCon.checked ? "Pause" : "Play";
+    }
+
+    goToSet(set) {
+        if (this.maxSet > 0) {
+            this.currentSet = (set + this.maxSet) % this.maxSet;
+            this.nextSet = (this.currentSet + 1) % this.maxSet;
+            this.previousSet = (this.currentSet - 1 + this.maxSet) % this.maxSet;
+            this.currentCount = 0;
+            this.time = 0;
+            this.updateMoveControls();
+        }
+    }
+
+    nextStep() {
+        if (this.maxSet > 0) {
+            this.currentCount++;
+            if (this.currentCount >= this.getTransitionMove().count) {
+                this.goToSet(this.currentSet + 1);
+            }
+        }
+    }
+
+    previousStep() {
+        if (this.maxSet > 0) {
+            if (this.currentCount > 0) {
+                this.currentCount--;
+            }
+            else {
+                let previousSet = (this.currentSet - 1 + this.maxSet) % this.maxSet;
+                this.currentSet = previousSet;
+                this.nextSet = (previousSet + 1) % this.maxSet;
+                this.previousSet = (previousSet - 1 + this.maxSet) % this.maxSet;
+                this.currentCount = this.getTransitionMove().count - 1;
+                this.updateMoveControls();
+            }
+        }
     }
 
     update() {
@@ -157,7 +220,7 @@ class Show {
             if (this.time >= 3600 / (this.tempoControl.value * this.speedControl.value)) {
                 this.currentCount++;
                 this.time = 0;
-                if (this.currentCount >= this.getMove().count) {
+                if (this.currentCount >= this.getTransitionMove().count) {
                     this.currentSet = (this.currentSet + 1) % this.maxSet;
                     this.nextSet = (this.currentSet + 1) % this.maxSet;
                     this.previousSet = (this.currentSet - 1 + this.maxSet) % this.maxSet;
@@ -174,7 +237,7 @@ class Show {
         this.nextSetDis.innerText = this.nextSet;
         this.currentSetDis.innerText = this.currentSet;
         this.previousSetDis.innerText = this.previousSet;
-        this.countDis.innerText = `${this.currentCount}/${this.getMove().count}`;
+        this.countDis.innerText = `${this.currentCount}/${this.getTransitionMove().count}`;
         this.tempoDis.innerText = `${this.tempoControl.value} BPM`;
         this.speedDis.innerText = `x${this.speedControl.value}`;
     }
@@ -205,6 +268,7 @@ class Show {
         this.updateDropdown();
         this.updatePlayerControls();
         this.updateMoveControls();
+        this.updatePlayPause();
     }
 }
 

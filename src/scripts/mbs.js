@@ -9,7 +9,7 @@ let imex;
 
 document.addEventListener('DOMContentLoaded', () => {
     field = new Field("canvas", 300 / 3, 160 / 3, 60 / 3, 10, "white", "green", "fieldControls", "bgColor", "lnColor", "lnWidth", "mouseX", "mouseY", "fieldType");
-    show = new Show("showTitle", "showTitleInput", "nextSet", "currentSet", "prevSet", "count", "tempo", "speed", "tempoControl", "speedControl", "moveCountControl", "moveStepSizeControl", "move", "path", "playerSelect", "playerId", "playerName", "playerColor", "addPlayer", "removePlayer");
+    show = new Show("showTitle", "showTitleInput", "nextSet", "currentSet", "prevSet", "count", "tempo", "speed", "tempoControl", "speedControl", "moveCountControl", "moveStepSizeControl", "move", "path", "playerSelect", "playerId", "playerName", "playerColor", "addPlayer", "removePlayer", "beginning", "previousSetButton", "previousStep", "playPause", "nextStep", "nextSetButton", "end");
 
     let testPlayers = [
         new Player("T1", "Trumpet 1", "#e63946", [{ x: 35, y: 16 }, { x: 25, y: 10 }, { x: 20, y: 12 }, { x: 50, y: 6 }, { x: 25, y: 12 }, { x: 35, y: 16 }]),
@@ -23,10 +23,10 @@ document.addEventListener('DOMContentLoaded', () => {
     ];
     show.load(testPlayers, [
         { count: 16, stepSize: .625 },
+        { count: 16, stepSize: .625 },
         { count: 12, stepSize: .8333333333 },
         { count: 24, stepSize: .625 },
         { count: 8, stepSize: .4166666667 },
-        { count: 16, stepSize: .625 },
         { count: 16, stepSize: .625 }
     ], "Color Test Show");
 
@@ -39,7 +39,7 @@ document.addEventListener('DOMContentLoaded', () => {
     setInterval(() => {
         field.draw();
         show.update();
-        field.setStepSize(show.getMove().stepSize);
+        field.setStepSize(show.getTransitionMove().stepSize);
         field.update();
         show.show(field);
     }, 1000 / 60);

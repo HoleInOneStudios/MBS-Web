@@ -29,6 +29,10 @@
         <section class="field-area" aria-label="Marching field">
           <canvas id="canvas" aria-label="Marching field"><p>Your browser does not support the HTML5 canvas tag.</p></canvas>
         </section>
+        <div class="transport-controls field-transport" aria-label="Playback controls">
+          <button type="button" id="beginning" aria-label="Beginning" title="Beginning">|◀</button><button type="button" id="previousSetButton" aria-label="Previous Set" title="Previous Set">◀◀</button><button type="button" id="previousStep" aria-label="Previous Step" title="Previous Step">◀</button>
+          <button type="button" id="playPause" aria-label="Pause" title="Pause">❚❚</button><button type="button" id="nextStep" aria-label="Next Step" title="Next Step">▶</button><button type="button" id="nextSetButton" aria-label="Next Set" title="Next Set">▶▶</button><button type="button" id="end" aria-label="End" title="End">▶|</button>
+        </div>
         <aside class="side-panel">
           <section class="panel" aria-labelledby="controls-heading">
             <h2 id="controls-heading">Controls</h2>
@@ -47,10 +51,10 @@
             <div class="control-grid">
               <label for="tempoControl">Tempo</label><input type="number" id="tempoControl" min="40" max="240" value="120" />
               <label for="speedControl">Speed</label><input type="number" id="speedControl" min="0.25" step="0.25" value="1" />
-              <label for="moveCountControl">Move Count</label><input type="number" id="moveCountControl" min="1" step="1" />
-              <label for="moveStepSizeControl">Move Step Size</label><select id="moveStepSizeControl"><option value="0.625">8 to 5</option><option value="0.8333333333">6 to 5</option><option value="0.4166666667">12 to 5</option><option value="0.3125">16 to 5</option></select>
-              <label for="move">Move</label><input type="checkbox" id="move" checked />
+              <label for="moveCountControl">Set Count</label><input type="number" id="moveCountControl" min="1" step="1" />
+              <label for="moveStepSizeControl">Set Step Size</label><select id="moveStepSizeControl"><option value="0.625">8 to 5</option><option value="0.8333333333">6 to 5</option><option value="0.4166666667">12 to 5</option><option value="0.3125">16 to 5</option></select>
               <label for="path">Paths</label><input type="checkbox" id="path" />
+              <input type="checkbox" id="move" checked hidden />
             </div>
             <h3>Players</h3>
             <div class="control-grid">
