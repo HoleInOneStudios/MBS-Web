@@ -1,5 +1,5 @@
 class Show {
-    constructor (showTitleDis, showTitleControl, previousSetDis, currentSetDis, nextSetDis, countDis, tempoDis, speedDis, tempoControl, speedControl, moveCountControl, moveStepSizeControl, moveCon, pathCon, playerSelect, playerId, playerName, playerColor, playerAdd, playerRemove, beginning, previousSet, previousStep, playPause, nextStep, nextSet, end) {
+    constructor (showTitleDis, showTitleControl, previousSetDis, currentSetDis, nextSetDis, countDis, tempoDis, speedDis, tempoControl, speedControl, moveCountControl, moveStepSizeControl, moveCon, pathCon, playerSelect, playerId, playerName, playerColor, playerAdd, playerRemove, isolatePlayer, beginning, previousSet, previousStep, playPause, nextStep, nextSet, end) {
         this.Players = [];
         this.Moves = [];
         this.selected = undefined;
@@ -32,6 +32,7 @@ class Show {
         this.playerColor = document.getElementById(playerColor);
         this.playerAdd = document.getElementById(playerAdd);
         this.playerRemove = document.getElementById(playerRemove);
+        this.isolatePlayer = document.getElementById(isolatePlayer);
         this.beginning = document.getElementById(beginning);
         this.previousSetButton = document.getElementById(previousSet);
         this.previousStepButton = document.getElementById(previousStep);
@@ -243,7 +244,11 @@ class Show {
     }
 
     show(field) {
-        this.Players.forEach(element => {
+        let players = this.Players;
+        if (this.isolatePlayer.checked) {
+            players = this.Players.filter(element => element.id == this.playerSelect.value);
+        }
+        players.forEach(element => {
             element.show(field);
             if (this.path) {
                 element.showPath(field);
@@ -252,13 +257,14 @@ class Show {
     }
 
     toJson() {
-        return { Title: this.title, Players: this.Players.map(element => element.toJson()), Moves: this.Moves };
+        return { Title: this.title, Tempo: this.tempoControl.value, Players: this.Players.map(element => element.toJson()), Moves: this.Moves };
     }
 
-    load(players, moves, title) {
+    load(players, moves, title, tempo) {
         this.Players = players;
         this.Moves = moves || [];
         this.title = title || "Untitled Show";
+        this.tempoControl.value = tempo || 120;
         this.showTitleDis.innerText = this.title;
         this.showTitleControl.value = this.title;
         this.currentSet = 0;

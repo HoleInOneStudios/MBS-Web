@@ -39,20 +39,21 @@
             <h3>Show</h3>
             <div class="control-grid">
               <label for="showTitleInput">Title</label><input type="text" id="showTitleInput" value="Test Show" />
+              <label for="tempoControl">Tempo</label><input type="number" id="tempoControl" min="40" max="240" value="120" />
+            </div>
+            <h3>Set</h3>
+            <div class="control-grid">
+              <label for="moveCountControl">Counts</label><input type="number" id="moveCountControl" min="1" step="1" />
+              <label for="moveStepSizeControl">Step Size</label><select id="moveStepSizeControl"><option value="0.625">8 to 5</option><option value="0.8333333333">6 to 5</option><option value="0.4166666667">12 to 5</option><option value="0.3125">16 to 5</option></select>
             </div>
             <h3>Field</h3>
             <div id="fieldControls" class="control-grid">
               <label for="fieldType">Field</label><select id="fieldType"><option value="NCAA">NCAA</option><option value="High School">High School</option><option value="NFL">NFL</option></select>
-              <label for="bgColor">Background</label><input type="color" id="bgColor" value="#009900" />
-              <label for="lnColor">Line</label><input type="color" id="lnColor" value="#ffffff" />
-              <label for="lnWidth">Line Size</label><input type="range" id="lnWidth" min="5" max="15" value="10" />
+              <label for="bgColor">Background</label><select id="bgColor"><option value="#009900">Green</option><option value="#ffffff">White</option></select>
             </div>
             <h3>Simulation</h3>
             <div class="control-grid">
-              <label for="tempoControl">Tempo</label><input type="number" id="tempoControl" min="40" max="240" value="120" />
               <label for="speedControl">Speed</label><input type="number" id="speedControl" min="0.25" step="0.25" value="1" />
-              <label for="moveCountControl">Set Count</label><input type="number" id="moveCountControl" min="1" step="1" />
-              <label for="moveStepSizeControl">Set Step Size</label><select id="moveStepSizeControl"><option value="0.625">8 to 5</option><option value="0.8333333333">6 to 5</option><option value="0.4166666667">12 to 5</option><option value="0.3125">16 to 5</option></select>
               <label for="path">Paths</label><input type="checkbox" id="path" />
               <input type="checkbox" id="move" checked hidden />
             </div>
@@ -62,6 +63,7 @@
               <label for="playerId">ID</label><input type="text" id="playerId" placeholder="T1" />
               <label for="playerName">Name</label><input type="text" id="playerName" placeholder="Trumpet 1" />
               <label for="playerColor">Color</label><input type="color" id="playerColor" value="#ff0000" />
+              <label for="isolatePlayer">Isolate Selected</label><input type="checkbox" id="isolatePlayer" />
               <button type="button" id="addPlayer">Add Player</button><button type="button" id="removePlayer">Remove Player</button>
             </div>
           </section>

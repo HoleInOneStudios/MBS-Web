@@ -11,7 +11,12 @@ class Player {
 
     show(field) {
         field.ctx.fillStyle = this.color;
-        field.ctx.fillRect(this.pos.x * field.getScale(), this.pos.y * field.getScale(), 1 * field.getScale(), 1 * field.getScale());
+        field.ctx.beginPath();
+        field.ctx.arc(field.toCanvasX(this.pos.x), this.pos.y * field.getScale(), .5 * field.getScale(), 0, 2 * Math.PI);
+        field.ctx.fill();
+        field.ctx.lineWidth = .15 * field.getScale();
+        field.ctx.strokeStyle = field.getPlayerOutlineColor();
+        field.ctx.stroke();
     }
 
     update(show) {
@@ -23,9 +28,9 @@ class Player {
     showPath(field) {
         field.ctx.strokeStyle = this.color;
         field.ctx.beginPath();
-        field.ctx.moveTo(this.sets[this.sets.length - 1].x * field.getScale(), this.sets[this.sets.length - 1].y * field.getScale());
+        field.ctx.moveTo(field.toCanvasX(this.sets[this.sets.length - 1].x), this.sets[this.sets.length - 1].y * field.getScale());
         this.sets.forEach(element => {
-            field.ctx.lineTo(element.x * field.getScale(), element.y * field.getScale());
+            field.ctx.lineTo(field.toCanvasX(element.x), element.y * field.getScale());
         });
         field.ctx.stroke();
     }

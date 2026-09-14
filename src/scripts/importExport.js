@@ -45,7 +45,7 @@ class ImportExport {
             }
         }
 
-        this.show.load(players, moves, data.Title);
+        this.show.load(players, moves, data.Title, data.Tempo);
     }
 
     download() {

@@ -21,15 +21,24 @@ Then open `http://localhost/`.
 
 ## Controls
 
-- **Show** — set the show title. It is included when exporting.
-- **Field** — choose NCAA, High School, or NFL hash marks and adjust field
-  colors and line size.
-- **Simulation** — set tempo in BPM, a playback-speed multiplier, and the
-  count and step size assigned to the current set. The icon transport strip
+- **Show** — set the show title and tempo. These values are included when
+  exporting.
+- **Set** — set the current set's **Counts** and **Step Size**. These values
+  are stored in its `Moves` entry and describe the move into it.
+- **Field** — choose NCAA, High School, or NFL hash marks and select a green
+or white background. Lines automatically use a contrasting color, and field
+  markings scale with the field. The visual field includes ten-yard end zones
+  on both sides, shaded slightly differently from the main field; player
+  coordinates remain on the 0–100-yard playing field.
+- **Simulation** — set a playback-speed multiplier and path visibility. The
+  icon transport strip
   below the field plays/pauses, steps through counts, jumps between sets, and
   moves to the beginning/end of the show.
 - **Players** — select, add, remove, rename, recolor, or assign a section-style
-  ID such as `T1`, `B1`, or `C1`.
+  ID such as `T1`, `B1`, or `C1`. Enable **Isolate Selected** to show only the
+  player selected in the Player dropdown and their path. Players render as
+  colored circles with an automatic contrasting outline for visibility on both
+  field backgrounds.
 - **Info** — shows set/count/playback information plus the mouse position in
   chart-style and raw canvas coordinates. Set information is displayed in
   previous, current, then next order.
@@ -48,6 +57,7 @@ Exports contain a title, players, and moves:
 ```json
 {
   "Title": "Example Show",
+  "Tempo": 120,
   "Players": [
     {
       "id": "T1",
